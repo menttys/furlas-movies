@@ -20,12 +20,12 @@ To get started with this project, follow the steps below:
    yarn
    ```
 
-3. Start the development server::
+3. Start the development server:
 
    ```bash
    yarn start
    ```
 
-4. Use the dev menu to clear MMKV local storage::
+4. Use the dev menu to clear MMKV local storage:
 
    - On iOS: Shake the device or press `Cmd + D` in the simulator, then select "Clear MMKV Local Storage".
