@@ -6,7 +6,10 @@ type PosterProps = {
   poster_path: string;
 };
 
-export const Poster: FC<Omit<ImageProps, "source"> & PosterProps> = ({ poster_path, ...props }) => (
+export const Poster: FC<Omit<ImageProps, "source"> & PosterProps> = ({
+  poster_path,
+  ...props
+}) => (
   <>
     {poster_path ? (
       <Image

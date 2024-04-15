@@ -7,6 +7,7 @@ export function useStorage() {
   // but for the sake of this example decided to use the storage directly
   const { storage } = useStore();
 
+  //TODO: Implement the setItem function
   function setItem<T>(key: string, values: Listitem<T>) {}
 
   function setListItems<T>(key: string, values: Listitem<T>) {
@@ -28,8 +29,8 @@ export function useStorage() {
     if (!list) {
       return false;
     }
-
     const parsedList = JSON.parse(list);
+
     return parsedList.find((item: Listitem<T>) => item.id === itemId);
   }
 
@@ -39,17 +40,16 @@ export function useStorage() {
 
   function getAllItems(key: string) {
     const list = storage.getString(key);
-
     if (!list) {
       return [];
     }
-
     const parsedList = JSON.parse(list);
     parsedList.id = `${parsedList.id}`;
 
     return JSON.parse(list);
   }
 
+  // TODO: Implement the removeItem function
   const removeItem = (key: string) => {};
 
   function removeItemFromList<T>(key: string, itemId: number) {

@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
+import RNBootSplash from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
 import { useNavigationContainerRef } from "@react-navigation/native";
-import RNBootSplash from "react-native-bootsplash";
 
 import { BottomTabNavigator } from "@navigators/BottomTabNavigator";
 import { Debugger } from "@components/Debugger/Debugger";

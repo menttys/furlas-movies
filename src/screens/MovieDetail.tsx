@@ -35,13 +35,15 @@ export const MovieDetail = ({
 
   const [isMovieInfavourites, setIsMovieInfavourites] =
     useState<boolean>(false);
+
   const {
-    movieContainer,
+    favouriteButton,
     poster,
     overview,
+    overviewHeader,
+    movieContainer,
     releaseTag,
     screenBackground,
-    overviewHeader,
   } = styles(bottom);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export const MovieDetail = ({
     setListItems(storageNames.favourites, {
       id: movie.id,
       title: movie.title,
-      poster: movie.poster_path,
+      poster_path: movie.poster_path,
     });
   };
 
@@ -97,21 +99,15 @@ export const MovieDetail = ({
       />
 
       <ScrollView contentContainerStyle={movieContainer}>
-        <View style={[overviewHeader]}>
+        <View style={overviewHeader}>
           <TouchableHighlight
             onPress={handleAddTofavourites}
             onLongPress={handleRemoveFromfavourites}
-            underlayColor="transparent"
+            underlayColor="#3602b9d3"
+            style={{ borderRadius: 8, backgroundColor: "#3602b9" }}
           >
-            <Text
-              style={[
-                releaseTag,
-                {
-                  backgroundColor: isMovieInfavourites ? "red" : "green",
-                },
-              ]}
-            >
-              Fav
+            <Text style={[favouriteButton]}>
+              {isMovieInfavourites ? "♥" : "♡"}
             </Text>
           </TouchableHighlight>
           <Text style={releaseTag}>{movie?.status}</Text>
@@ -149,6 +145,7 @@ const styles = (bottom: number) =>
       width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
+      alignItems: "center",
     },
     poster: {
       width: "80%",
@@ -172,5 +169,11 @@ const styles = (bottom: number) =>
       paddingHorizontal: 8,
       borderRadius: 6,
       overflow: "hidden",
+    },
+    favouriteButton: {
+      fontSize: 24,
+      color: "white",
+      paddingHorizontal: 8,
+      paddingVertical: 4,
     },
   });
