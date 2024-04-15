@@ -11,7 +11,7 @@ To get started with this project, follow the steps below:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/menttys/furlas-movies.git
    ```
 
 2. Install the dependencies::
