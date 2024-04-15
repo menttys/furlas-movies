@@ -1,14 +1,22 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableHighlight,
+} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
+import { storageNames } from "@constants/index";
 import { Poster } from "@components/Poster";
-import { useFetch } from "@hooks/index";
+import { FlexShrink } from "@components/Spacing";
+import { useFetch, useStorage } from "@hooks/index";
 import { paramsList, MAIN_STACK_ROUTES } from "@navigators/MainStackNavigator";
 import { getMovie } from "@services/client";
-import { FlexShrink } from "@components/Spacing";
 
 import type { MovieDetails } from "../types/client";
 
@@ -17,18 +25,40 @@ export const MovieDetail = ({
 }: NativeStackScreenProps<paramsList, MAIN_STACK_ROUTES.MovieDetail>) => {
   const { setOptions } = useNavigation();
   const { id } = route.params;
-  const { data: movie, loading, error } = useFetch<MovieDetails>(() => getMovie(id));
+  const {
+    data: movie,
+    loading,
+    error,
+  } = useFetch<MovieDetails>(() => getMovie(id));
   const { bottom } = useSafeAreaInsets();
-  const { movieContainer, poster, overview, releaseTag, screenBackground } = styles(bottom);
+  const { setListItems, getListItem, removeItemFromList } = useStorage();
 
-  React.useEffect(() => {
+  const [isMovieInfavourites, setIsMovieInfavourites] =
+    useState<boolean>(false);
+  const {
+    movieContainer,
+    poster,
+    overview,
+    releaseTag,
+    screenBackground,
+    overviewHeader,
+  } = styles(bottom);
+
+  useEffect(() => {
     if (!movie) {
       return;
     }
     setOptions({
-      title: movie.original_title,
+      title: movie.title,
     });
   }, [movie]);
+
+  useEffect(() => {
+    const isItemInFav = getListItem(storageNames.favourites, +id);
+    if (isItemInFav) {
+      setIsMovieInfavourites(true);
+    }
+  }, []);
 
   if (loading) {
     <View>
@@ -44,20 +74,56 @@ export const MovieDetail = ({
     return <Text>Movie not found: something really weird happened</Text>;
   }
 
+  const handleAddTofavourites = () => {
+    setIsMovieInfavourites(true);
+    setListItems(storageNames.favourites, {
+      id: movie.id,
+      title: movie.title,
+      poster: movie.poster_path,
+    });
+  };
+
+  const handleRemoveFromfavourites = () => {
+    setIsMovieInfavourites(false);
+    removeItemFromList(storageNames.favourites, movie.id);
+  };
+
   return (
     <>
       <Image
-        source={require("../../assets/images/background.jpg")}
+        source={require("@assets/images/background.jpg")}
         style={screenBackground}
         resizeMode="repeat"
       />
 
       <ScrollView contentContainerStyle={movieContainer}>
-        <Text style={releaseTag}>{movie?.status}</Text>
+        <View style={[overviewHeader]}>
+          <TouchableHighlight
+            onPress={handleAddTofavourites}
+            onLongPress={handleRemoveFromfavourites}
+            underlayColor="transparent"
+          >
+            <Text
+              style={[
+                releaseTag,
+                {
+                  backgroundColor: isMovieInfavourites ? "red" : "green",
+                },
+              ]}
+            >
+              Fav
+            </Text>
+          </TouchableHighlight>
+          <Text style={releaseTag}>{movie?.status}</Text>
+        </View>
         <FlexShrink basis={16} />
         <Text style={overview}>{movie?.overview}</Text>
         <FlexShrink basis={24} />
-        <Poster style={poster} poster_path={movie.poster_path} resizeMode="contain" />
+        <Poster
+          style={poster}
+          poster_path={movie.poster_path}
+          resizeMode="contain"
+        />
       </ScrollView>
     </>
   );
@@ -78,6 +144,11 @@ const styles = (bottom: number) =>
       padding: 24,
 
       alignItems: "center",
+    },
+    overviewHeader: {
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-between",
     },
     poster: {
       width: "80%",

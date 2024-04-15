@@ -1,6 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import * as useFetchFn from "@hooks/useFetch";
-import { MovieList } from "../MovieList";
+
+import { ListOfMovies } from "../ListOfMovies";
+
+const mockNavigate = jest.fn;
+
+jest.mock("@react-navigation/native", () => ({
+  useNavigation: () => ({
+    navigate: mockNavigate,
+  }),
+}));
+
+jest.mock("@react-navigation/native-stack", () => ({
+  createNativeStackNavigator: () => jest.fn,
+}));
 
 const movieMocksResults = [
   {
@@ -28,23 +41,19 @@ jest.spyOn(useFetchFn, "useFetch").mockImplementation(() => ({
   error: null,
 }));
 
-const navigation = {
-  navigate: jest.fn,
-};
-
-jest.spyOn(navigation, "navigate");
-
 describe("MovieList", () => {
-  test("renders the right number of movies", async () => {
-    render(<MovieList navigation={navigation} />);
+  test.only("renders the right number of movies", async () => {
+    render(<ListOfMovies data={movieMocksResults} loading={false} />);
 
     await screen.getByText(movieMocksResults[0].title);
 
-    expect(screen.getAllByRole("button")).toHaveLength(movieMocksResults.length);
+    expect(screen.getAllByRole("button")).toHaveLength(
+      movieMocksResults.length,
+    );
   });
 
   test("should render titles and images on buttons", async () => {
-    render(<MovieList navigation={navigation} />);
+    render(<ListOfMovies data={movieMocksResults} loading={false} />);
 
     await movieMocksResults.map((movie) => {
       expect(screen.getByText(movie.title)).toBeTruthy();
@@ -52,11 +61,11 @@ describe("MovieList", () => {
   });
 
   test("should navigate", async () => {
-    render(<MovieList navigation={navigation} />);
+    render(<ListOfMovies data={movieMocksResults} loading={false} />);
 
     fireEvent.press(screen.getByText(movieMocksResults[1].title));
 
-    expect(navigation.navigate).toHaveBeenCalledWith("MovieDetail", {
+    expect(mockNavigate).toHaveBeenCalledWith("MovieDetail", {
       id: movieMocksResults[1].id,
     });
   });

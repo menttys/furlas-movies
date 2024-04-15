@@ -2,11 +2,11 @@
 const config = {
   bracketSpacing: true,
   bracketSameLine: false,
-  printWidth: 100,
+  printWidth: 80,
   semi: true,
   singleQuote: false,
   tabWidth: 2,
-  trailingComma: 'all',
+  trailingComma: "all",
   useTabs: false,
 };
 
