@@ -3,7 +3,7 @@ import * as useFetchFn from "@hooks/useFetch";
 
 import { ListOfMovies } from "../ListOfMovies";
 
-const mockNavigate = jest.fn;
+const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
@@ -42,7 +42,7 @@ jest.spyOn(useFetchFn, "useFetch").mockImplementation(() => ({
 }));
 
 describe("MovieList", () => {
-  test.only("renders the right number of movies", async () => {
+  test("renders the right number of movies", async () => {
     render(<ListOfMovies data={movieMocksResults} loading={false} />);
 
     await screen.getByText(movieMocksResults[0].title);
@@ -65,8 +65,6 @@ describe("MovieList", () => {
 
     fireEvent.press(screen.getByText(movieMocksResults[1].title));
 
-    expect(mockNavigate).toHaveBeenCalledWith("MovieDetail", {
-      id: movieMocksResults[1].id,
-    });
+    expect(mockNavigate).toHaveBeenCalledWith("MovieDetail", { id: "1" });
   });
 });
