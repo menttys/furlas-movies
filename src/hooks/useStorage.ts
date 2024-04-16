@@ -50,7 +50,7 @@ export function useStorage() {
   }
 
   // TODO: Implement the removeItem function
-  const removeItem = (key: string) => {};
+  function removeItem(key: string) {}
 
   function removeItemFromList<T>(key: string, itemId: number) {
     const list = storage.getString(key);
