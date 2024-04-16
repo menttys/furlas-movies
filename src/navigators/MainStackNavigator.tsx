@@ -2,16 +2,16 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { MovieDetail } from "@/screens/MovieDetails/MovieDetail";
-import { MovieList } from "@/screens/MovieList/MovieList";
+import { BottomTabNavigator } from "./BottomTabNavigator";
 
 import type { Movie } from "../types/client";
 
 export enum MAIN_STACK_ROUTES {
-  MovieList = "MovieList",
+  BottomTabNavigation = "BottomTabNavigation",
   MovieDetail = "MovieDetail",
 }
 export type paramsList = {
-  [MAIN_STACK_ROUTES.MovieList]: undefined;
+  [MAIN_STACK_ROUTES.BottomTabNavigation]: undefined;
   [MAIN_STACK_ROUTES.MovieDetail]: { id: Movie["id"] };
 };
 
@@ -21,10 +21,10 @@ export const MainStackNavigator = () => {
   return (
     <StackNavigator.Navigator>
       <StackNavigator.Screen
-        name={MAIN_STACK_ROUTES.MovieList}
-        component={MovieList}
+        name={MAIN_STACK_ROUTES.BottomTabNavigation}
+        component={BottomTabNavigator}
         options={{
-          title: "Movies",
+          headerShown: false,
           headerBackTitleVisible: false,
         }}
       />

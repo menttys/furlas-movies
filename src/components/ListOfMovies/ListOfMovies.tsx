@@ -16,7 +16,7 @@ export const MOVIE_LIST_TEST_ID = "movielist-test-id";
 export const BUTTON_A11Y_LABEL = "movie button to:";
 
 type CompositeNavigationPropNavigationProp = CompositeNavigationProp<
-  NavigationProp<paramsList, MAIN_STACK_ROUTES.MovieList>,
+  NavigationProp<paramsList, MAIN_STACK_ROUTES.BottomTabNavigation>,
   NavigationProp<paramsList>
 >;
 

@@ -15,6 +15,18 @@ jest.mock("@react-navigation/native-stack", () => ({
   createNativeStackNavigator: () => jest.fn,
 }));
 
+jest.mock("@react-navigation/bottom-tabs", () => ({
+  createBottomTabNavigator: () => jest.fn,
+}));
+
+jest.spyOn(useFetchFn, "useFetch").mockImplementation(() => ({
+  data: {
+    results: movieMocksResults,
+  },
+  loading: false,
+  error: null,
+}));
+
 const movieMocksResults = [
   {
     id: "0",
@@ -32,14 +44,6 @@ const movieMocksResults = [
     poster_path: "the cool robot one",
   },
 ];
-
-jest.spyOn(useFetchFn, "useFetch").mockImplementation(() => ({
-  data: {
-    results: movieMocksResults,
-  },
-  loading: false,
-  error: null,
-}));
 
 describe("MovieList", () => {
   test("renders the right number of movies", async () => {

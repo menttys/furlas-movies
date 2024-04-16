@@ -3,7 +3,7 @@ import RNBootSplash from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
 import { useNavigationContainerRef } from "@react-navigation/native";
 
-import { BottomTabNavigator } from "@navigators/BottomTabNavigator";
+import { MainStackNavigator } from "@navigators/MainStackNavigator";
 import { Debugger } from "@components/Debugger";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         ref={navigationContainerRef}
         onReady={onNavigationReady}
       >
-        <BottomTabNavigator />
+        <MainStackNavigator />
       </NavigationContainer>
     </>
   );
