@@ -19,7 +19,10 @@ export const LoadingState = () => {
         {Array(NUMBER_OF_ROWS)
           .fill(0)
           .map((_, i) => (
-            <View style={styles.MovieBlockSkeletonItem} key={`loading-state-items-${i}`} />
+            <View
+              style={styles.MovieBlockSkeletonItem}
+              key={`loading-state-items-${i}`}
+            />
           ))}
       </View>
     </MaskedShimmer>

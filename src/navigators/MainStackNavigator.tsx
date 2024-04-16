@@ -1,8 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { MovieDetail } from "@screens/MovieDetail";
-import { MovieList } from "@screens/MovieDetails/MovieList";
+import { MovieDetail } from "@/screens/MovieDetails/MovieDetail";
+import { MovieList } from "@/screens/MovieList/MovieList";
 
 import type { Movie } from "../types/client";
 

@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useNavigationContainerRef } from "@react-navigation/native";
 
 import { BottomTabNavigator } from "@navigators/BottomTabNavigator";
-import { Debugger } from "@components/Debugger/Debugger";
+import { Debugger } from "@components/Debugger";
 
 function App() {
   const navigationContainerRef = useNavigationContainerRef();

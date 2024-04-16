@@ -14,7 +14,12 @@ type Props = {
   shimmerOpacity?: number;
 };
 
-export const MaskedShimmer = ({ children, style, opacity = 0.2, shimmerOpacity = 0.2 }: Props) => {
+export const MaskedShimmer = ({
+  children,
+  style,
+  opacity = 0.2,
+  shimmerOpacity = 0.2,
+}: Props) => {
   const { width, height } = useWindowDimensions();
   return (
     <View style={[styles.container, style]} testID="masked-shimmer">
